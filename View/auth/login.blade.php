@@ -2,8 +2,9 @@
 <html lang="en">
 
 <head>
-    <title><?= $title ?></title>
-    <?= extend('head') ?>
+    <title>{{ $title }}</title>
+    @include('layout.head')
+
 </head>
 
 <body>
@@ -22,11 +23,13 @@
                                     placeholder="Email address" required autofocus />
                                 <label for="inputEmail">Email address</label>
                             </div>
-                            <?php if (isset($_SESSION['error'])) : ?>
+                            @if (isset($_SESSION['error']))
+
+
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <ul>
 
-                                    <li><?= $_SESSION['message'] ?></li>
+                                    <li> {{ $_SESSION['message'] }} </li>
 
                                 </ul>
 
@@ -34,8 +37,11 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <?php unset($_SESSION['error']);
-                            endif  ?>
+                            @php
+                            unset($_SESSION['error']);
+                            @endphp
+
+                            @endif
                             <div class="form-label-group">
                                 <input type="password" name="password" id="inputPassword" class="form-control"
                                     placeholder="Password" required />
@@ -59,7 +65,8 @@
         </div>
     </div>
     <!--js files-->
-    <?= extend('script') ?>
+    @include('layout.script')
+
 </body>
 
 </html>

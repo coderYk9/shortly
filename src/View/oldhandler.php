@@ -1,15 +1,17 @@
 <?php
 
+/** this handler and render view without any package  */
+
+
 namespace Root\View;
 
-use eftec\bladeone\BladeOne;
 
 class ViewHandler
 {
     private static string $path = APP_PATH . 'View' . DS;
-    public static function make(string $view, $data = [])
+    public static function make(string $view, $data = null)
     {
-        return  self::getblade($view, $data);
+        return  self::getViewContent($view, $data);
     }
     public static function makeError($type)
     {
@@ -24,20 +26,21 @@ class ViewHandler
     }
     private function CheekPath(string $view)
     {
-        $path = str_replace(['/', '\\', '.'], DS, $view) . '.blade.php';
+        $path = str_replace(['/', '\\', '.'], DS, $view) . '.php';
         $path = self::$path . $path;
         if (file_exists($path)) {
-            return true;
+            return $path;
         }
         return false;
     }
-
-    protected function getblade(string $view, $data)
+    protected function getViewContent(string $view, $data)
     {
-
-        if (self::CheekPath($view)) {
-            $balde =  new BladeOne(APP_PATH . 'View', APP_PATH . 'storage', BladeOne::MODE_DEBUG);
-            return $balde->run($view, $data);
+        $cheek = self::CheekPath($view);
+        if ($cheek) {
+            extract(...[$data]);
+            ob_start();
+            include $cheek;
+            return ob_get_clean();
         }
         dd("Fatal Error : This ><'$view'>< View is not found");
     }

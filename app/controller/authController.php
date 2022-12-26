@@ -5,23 +5,25 @@ namespace App\controller;
 use Root\Http\Request;
 use App\model\User;
 
+/** this class impliment user authenticatio */
 class AuthController
 {
 
 
-
-    public function index(Request $request)
+    /**
+     *  index function is impliment login view 
+     * @return View 
+     */
+    public function index()
     {
-        // dd(Admin::getByPK('1')->username);
-        return view('admin.login', ['title' => 'LOGIN']);
+        return view('auth.login', ['title' => 'LOGIN']);
     }
     public function login(Request $request)
     {
         $user = User::query()
             ->where('username', '=', $request->getquery('username'))
             ->first();
-        //$2y$10$YOUciHnRFKNli40u/i8CI.NPinX5b4H2qLih./THy0wHNqhdw04Ee
-        // dd();
+
         if (!$user) {
             $_SESSION['message'] = 'the user is not found';
             $_SESSION['old'] = $request->all();
@@ -35,9 +37,25 @@ class AuthController
         $_SESSION['user_id'] = $user->id;
         return  redirect('/admin/dashboard');
     }
+    public function store(Request $request)
+    {
+        try {
+            $query = [
+                'name' => $request->getquery('name'),
+                'username' => $request->getquery('username'),
+                'password' => password_hash($request->getquery('password'), PASSWORD_BCRYPT),
+            ];
+            User::query()->create($query);
+        } catch (\Throwable $th) {
+            $_SESSION['message'] = 'error to regiset with this information';
+            $_SESSION['error'] = true;
+            return redirect($request->previouds());
+        }
+        return  redirect('/auth/login');
+    }
     public function register(Request $request)
     {
-        return view('admin.register', ['title' => 'REGISTER']);
+        return view('auth.register', ['title' => 'REGISTER']);
     }
 }
 /*

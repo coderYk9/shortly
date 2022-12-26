@@ -13,6 +13,6 @@ class AdminController
     public function index(Request $request, array $prams)
     {
 
-        return view('admin.dashboard', ['title' => 'dashborad frome adminconttroller']);
+        return view('admin.dashbord.dashboard', ['title' => 'dashborad frome adminconttroller']);
     }
 }
