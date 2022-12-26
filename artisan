@@ -1,0 +1,22 @@
+<?php
+define('DS', DIRECTORY_SEPARATOR);
+define('APP_PATH', realpath(dirname(__FILE__)) . DS);
+require './vendor' . DS . 'autoload.php';
+require APP_PATH . 'database' . DS . 'migrations' . DS . '2022_11_16_000003_create_url_table.php';
+
+use Dotenv\Dotenv;
+
+Dotenv::createImmutable(APP_PATH)->load();
+
+use Root\database\Migration;
+
+
+
+if (isset($argv[1]) and $argv[1] === 'make') {
+	// Migration::db_connect();
+	// $table = new Create_user_table();
+	// // $table->down();
+	// $table->up();
+	print_r(password_verify('password', '$2y$10$YOUciHnRFKNli40u/i8CI.NPinX5b4H2qLih./THy0wHNqhdw04Ee'));
+	// printf(' The migrations complate successfully ') . PHP_EOL;
+}
