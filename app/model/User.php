@@ -8,7 +8,7 @@ use App\model\AbstractModel;
 class User extends AbstractModel
 {
 
-    protected $table = 'admins';
+    protected $table = 'users';
     protected $guarded = [];
     protected $timestamp = true;
 }

@@ -16,7 +16,8 @@ class AuthController
      */
     public function index()
     {
-        return view('auth.login', ['title' => 'LOGIN']);
+        return view('admin.auth.login', ['title' => 'LOGIN']);
+        // return view('auth.login', ['title' => 'LOGIN']);
     }
     public function login(Request $request)
     {

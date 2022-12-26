@@ -2,17 +2,26 @@
 
 namespace App\controller\admin;
 
-use App\model\Employee;
 use Root\Http\Request;
-use App\model\User;
+use App\model\Admins;
 
 
 class AdminController
 {
 
-    public function index(Request $request, array $prams)
+    public function index()
     {
 
-        return view('admin.dashbord.dashboard', ['title' => 'dashborad frome adminconttroller']);
+        try {
+            $user = Admins::all();
+            return view('admin.activite.index', ['title' => 'Membres', 'admins' => $user]);
+        } catch (\Throwable $th) {
+            return  viewError(404);
+        }
+    }
+    public function store()
+    {
+
+        return view('admin.activite.create', ['title' => 'Create']);
     }
 }
