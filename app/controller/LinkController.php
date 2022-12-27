@@ -4,6 +4,8 @@ namespace App\controller;
 
 use App\model\Links;
 use App\model\User;
+use Illuminate\Support\Facades\Validator;
+use Root\Http\jsonResponse\JsonResponse;
 use Root\Http\Request;
 
 
@@ -11,21 +13,21 @@ use Root\Http\Request;
 class LinkController
 {
 
+    public function del(Request $res, $params)
+    {
+        $links = Links::query()
+            ->where('user_id', '=', $res->user_id())
+            ->where('id', '=', $params['id'])
+            ->first();
+        if (empty($links)) {
+            $_SESSION['message'] = 'You are not acces to this link ';
+            return redirect('/my-links');
+        }
+        $links->delete();
+        $_SESSION['msg'] = 'The links delete successfully';
+        return redirect('/my-links');
+    }
 
-    /**
-     *  index function is impliment login view 
-     * @return View 
-     */
-    // public function index()
-    // {
-    //     return view('web.home.index', ['title' => 'HOME']);
-    // }
-    // //add links
-    // public function add()
-    // {
-    //     return view('web.home.index', ['title' => 'HOME']);
-    // }
-    //store links
     public function store()
     {
         $links = Links::all();
@@ -35,6 +37,14 @@ class LinkController
             }
         }
         return view('admin.links.index', ['title' => 'my-LInks', 'links' => $links]);
+    }
+    public function all(Request $res)
+    {
+        $links = Links::query()
+            ->where('user_id', '=', $res->user_id())
+            ->get();
+
+        return view('web.links.index', ['title' => 'my-LInks', 'links' => $links]);
     }
     //delete link
     public function delete(Request $req, $params)
@@ -54,9 +64,41 @@ class LinkController
             return redirect($req->previouds());
         }
     }
-    // // to edite link
-    // public function edite()
-    // {
-    //     return view('web.home.index', ['title' => 'HOME']);
-    // }
+    public function create(Request $req)
+    {
+        try {
+
+            $full = $req->getquery('full_url');
+            if (empty($full = $req->getquery('full_url'))) {
+                return JsonResponse::jsoneResponse(['errors' => ['full_link' => "this url not valide"]]);
+            }
+            $short = uniqueurl();
+            $data = [
+                'full_url' => $full,
+                'short_url' => $short,
+            ];
+            if ($req->user_id()) {
+                $data['user_id'] = $req->user_id();
+            }
+            Links::query()->create($data);
+        } catch (\Throwable $th) {
+            return JsonResponse::jsoneResponse(['errors' => ['full_link' => "this $full not valide"]]);
+        }
+
+        $url = $req->baseUrl() . '/' . $short;
+
+        return JsonResponse::jsoneResponse(['url' => $url]);
+    }
+    public function getlink(Request $req, $params)
+    {
+        $link = $params['link'];
+        $cheek = Links::query()
+            ->where('short_url', '=', $link)
+            ->first();
+        if (!$cheek) {
+            return viewError(404);
+        }
+        $cheek->update(['views' => ++$cheek->views]);
+        return redirect($cheek->full_url);
+    }
 }

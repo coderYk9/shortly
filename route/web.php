@@ -9,7 +9,7 @@ use App\controller\UserAuthController;
 use App\controller\UserController;
 
 Route::get('/error', function () {
-   echo viewError('502');
+   echo viewError(502);
 });
 Route::get('/', [UserController::class, 'index']);
 
@@ -41,8 +41,9 @@ Route::prefix('admin', function () {
 /*--------------------  user auth ---------------------*/
 
 Route::middleware('userAuth', function () {
-   Route::get('/add', [UserController::class, 'add']);
+   Route::post('/links/{id}/delete', [LinkController::class, 'del']);
    Route::post('/logout', [UserAuthController::class, 'logout']);
+   Route::get('/my-links', [LinkController::class, 'all']);
 });
 /*--------------------  user loging ---------------------*/
 
@@ -52,3 +53,7 @@ Route::middleware('guest|guestUser', function () {
    Route::post('/register', [UserAuthController::class, 'store']);
    Route::get('/register', [UserAuthController::class, 'register']);
 });
+/*--------------------  linck store ---------------------*/
+
+Route::post('/link/store', [LinkController::class, 'create']);
+Route::get('/link/{link}/', [LinkController::class, 'getlink']);

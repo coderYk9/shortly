@@ -17,6 +17,7 @@ class UserController
      */
     public function index()
     {
+
         return view('web.home.index', ['title' => 'HOME']);
     }
     //add links
@@ -30,14 +31,4 @@ class UserController
         $links = Links::all();
         return view('web.links.index', ['title' => 'my-LInks', 'links' => $links]);
     }
-    //delete link
-    // public function delete()
-    // {
-    //     return view('web.home.index', ['title' => 'HOME']);
-    // }
-    // // to edite link
-    // public function edite()
-    // {
-    //     return view('web.home.index', ['title' => 'HOME']);
-    // }
 }

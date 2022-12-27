@@ -12,10 +12,10 @@
                 <form action="link/store" method="POST" id="link_store">
                     <div class="alert" id="link_message"></div>
                     <div class="input-group mb-3">
-                        <input name="full_link" type="text" class="form-control"
+                        <input name="full_url" type="text" class="form-control"
                             placeholder="Please Long URl And Shorten It">
                         <div class="input-group-append">
-                            <button class="btn btn-short" type="submit">Shorten</button>
+                            <button class=" btn btn-shorten" type="submit">Shorten</button>
                         </div>
                     </div>
                 </form>
@@ -24,7 +24,8 @@
         </div>
     </div>
 
-    <p class="lead term">By using our service you accept the Terms and Privacy.</p>
+    <p class="lead term">By using our service you accept the Terms and Privacy of <a style="color: beige"
+            href="mailto:coder9@gmail.com">Coder9Yk</a>.</p>
 
 </section>
 <!--Section About us-->

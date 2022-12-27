@@ -11,15 +11,15 @@
 
         <ul class="list-unstyled d-flex justify-content-center">
             <li>
-                <a href="/">Home</a>
+                <a href="https://web.facebook.com/oussama.sama.1">Home</a>
 
             </li>
-            <li><a href="">Contact</a></li>
+            <li><a href="coder9@gmail.com">Contact</a></li>
             <li>
                 <a href="">Privacy Policy</a>
             </li>
             <li>
-                <a href="">
+                <a href="https://web.facebook.com/oussama.sama.1">
                     Report
                 </a>
             </li>

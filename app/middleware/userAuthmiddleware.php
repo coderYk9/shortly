@@ -10,9 +10,9 @@ class UserAuthmiddleware implements MiddlewareInterface
 {
     public function __invoke($next, Request $request)
     {
-        if (!$_SESSION['user_id']) {
+        if (!$request->user_id()) {
             return redirect('/login');
-        } else if (!(User::query()->find($_SESSION['admin_id']))) {
+        } else if (!(User::query()->find($request->user_id()))) {
             unset($_SESSION['user_id']);
             return redirect('/login');
         }

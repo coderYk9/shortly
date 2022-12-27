@@ -7,38 +7,54 @@
         <div class="row">
             <div class="col-md-12">
                 @if(isset($_SESSION['msg']))
-                <div class="alert alert-info">{{ $_SESSION['msg'] }}</div>
+                <div class="alert alert-info">{{ $_SESSION['msg']  }}</div>
+                @php
+                unset($_SESSION['msg']);
+                @endphp
+                @endif
+                @if(isset($_SESSION['message']))
+                <div class="alert alert-danger">{{ $_SESSION['message']  }}</div>
+                @php
+                unset($_SESSION['message']);
+                @endphp
                 @endif
                 <table class="table">
                     <tr>
                         <th>Full url</th>
                         <th>Shorten url</th>
                         <th>Copy</th>
+                        <th>action</th>
                         <th>Clicks Count</th>
                     </tr>
-                    @foreach($links['data'] as $link)
+                    @foreach($links as $link)
                     <tr>
-                        <td>{{ $link->full_link }}</td>
-                        <td>{{ url('link/'.$link->short_link) }}</td>
-                        <td>
-                            <button onclick="copy('{{ url('link/' . $link->short_link) }}')"
-                                class="btn text-white">Copy</button>
-                            <a href="#" data-action="{{ url('link/' . $link->id . '/delete') }}"
-                                class="btn delete_confirmation" data-toggle="modal"
-                                data-target="#deleteModal">Delete</a>
+                        <td><a href="http://{{ $link->full_url }}" rel="noopener noreferrer">{{ $link->full_url }}</a>
                         </td>
-                        <td>5</td>
+                        <td>
+                            <a rel="stylesheet" href="{{ '/link/'. $link->short_url }}" />
+                            {{ $link->short_url }}
+                        </td>
+                        <td>
+                            <button onclick="copy('http://{{env('APP_DOMAINE')}}/link/{{ $link->short_url }}')"
+                                class="btn text-white">Copy</button>
+                        </td>
+                        <td>
+                            <form action="/links/{{$link->id}}/delete" method="post">
+                                <button type="submit" class="btn btn-danger delete_confirmation">Delete</a>
+                            </form>
+                        </td>
+                        <td>{{$link->views}}</td>
                     </tr>
                     @endforeach
                 </table>
             </div>
         </div>
 
-        {!! links($links['current_page'], $links['pages']) !!}
     </div>
 </section>
 
-@include('web.layouts.delete_modal')
+@include('admin.dashbord.delete_modal')
+
 @endsection
 
 @section('js')
@@ -49,6 +65,7 @@
             $temp.val(text).select();
             document.execCommand("copy");
             $temp.remove();
-        }
+        } ;
+        
 </script>
 @endsection

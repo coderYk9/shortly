@@ -1,6 +1,6 @@
 <?php
 
-
+use App\model\Links;
 use Root\BootStartup;
 use Root\Support\LanguageRender;
 use Root\View\Template;
@@ -30,7 +30,7 @@ if (!function_exists('view')) {
     }
 }
 if (!function_exists('viewError')) {
-    function viewError(string $type)
+    function viewError(int $type)
     {
         return \Root\View\ViewHandler::makeError($type);
     }
@@ -81,5 +81,17 @@ if (!function_exists('asset')) {
     function asset($resource)
     {
         return Template::asset($resource);
+    }
+}
+if (!function_exists('uniqueurl')) {
+    function uniqueurl()
+    {
+        $value = substr(md5(mt_rand()), 0, 8);
+        $cheek = empty(Links::query()->where('short_url', '=', $value)->first());
+        if (!$cheek) {
+            return uniqueurl();
+        }
+
+        return $value;
     }
 }
