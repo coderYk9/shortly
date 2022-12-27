@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title> {{$title}} </title>
-    @include('layout.head')
-
-</head>
+@extends('web.layouts.layout')
+@section('content')
 
 <body>
 
@@ -15,9 +9,9 @@
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <h2 class="logo text-center text-main"><a href="/"
-                                class="text-decoration-none text-main">CutURL</a></h2>
+                                class="text-decoration-none text-main">Shortly</a></h2>
                         <h5 class="card-title text-center">Sign Up</h5>
-                        <form class="form-signin" method="post" action="/auth/register" enctype="multipart/form-data">
+                        <form class="form-signin" method="post" action="/register" enctype="multipart/form-data">
                             <div class="form-label-group">
                                 <input type="text" id="name" name="name" class="form-control" placeholder="Full Name "
                                     required autofocus>
@@ -65,15 +59,11 @@
                         </form>
 
                         <div class="member text-center mt-5">
-                            <a class=" text-dark" href="/auth/login">i am already a member</a>
+                            <a class=" text-dark" href="/login">i am already a member</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--js files-->
-    @include('layout.script')
-</body>
-
-</html>
+    @endsection

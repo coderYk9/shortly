@@ -1,6 +1,4 @@
 @extends('admin.dashbord.layout')
-
-
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">

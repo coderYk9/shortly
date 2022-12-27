@@ -2,7 +2,7 @@
     <div class="col-sm-6">
         <div class="form-group has-feedback ">
             <label for="first_name">name</label>
-            <input value="{{ $admin->name }}" type="text" name="name" class="form-control" id="first_name"
+            <input value="{{ $user->name }}" type="text" name="name" class="form-control" id="first_name"
                 placeholder="First name" value="">
             @if(isset($_SESSION['error']))
             <div class="help-block">{{ $_SESSION['error'] }}</div>
@@ -12,7 +12,7 @@
     <div class="col-sm-6">
         <div class="form-group has-feedback has-error ">
             <label for="name">User name</label>
-            <input value="{{ $admin->username }}" type="text" name="username" class="form-control" id="user_name"
+            <input value="{{ $user->username }}" type="text" name="username" class="form-control" id="user_name"
                 placeholder="User name" />
 
 

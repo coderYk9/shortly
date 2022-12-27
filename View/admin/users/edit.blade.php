@@ -6,8 +6,8 @@
     <h1>{{ $title }}</h1>
     <ol class="breadcrumb">
         <li><a href="/admin/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="/admin/dashboard/"><i class="fa fa-cogs"></i> Memberes</a></li>
-        <li class="active">{{ $title }}</li>
+        <li><a href="/admin/users/"><i class="fa fa-users"></i> Users</a></li>
+        <li class="active"><i class="fa fa-user"></i> {{ $title }}</li>
     </ol>
 </section>
 
@@ -19,9 +19,9 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <!-- form start -->
-                <form action="{{ "/admin/members/" . $admin->id . '/update' }}" method="post">
+                <form action="{{ "/admin/user/" . $user->id . '/update' }}" method="post">
                     <div class="box-body">
-                        @include('admin.activite.form')
+                        @include('admin.users.form')
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">

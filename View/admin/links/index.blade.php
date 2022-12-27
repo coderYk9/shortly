@@ -1,4 +1,5 @@
 @extends('admin.dashbord.layout')
+
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 @endsection
@@ -10,8 +11,8 @@
 <section class="content-header">
     <h1>{{ $title }}</h1>
     <ol class="breadcrumb">
-        <li><a href="/admin/dashboard/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><i class="fa fa-cogs"></i> {{ $title }}</li>
+        <li><a href="/admin/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">{{ $title }}</li>
     </ol>
 </section>
 
@@ -31,34 +32,34 @@
             unset($_SESSION['message']);
             @endphp
             @endif
+
+
             <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">
-                        <a href="/admin/store/" class="btn btn-primary">Add new admin</a>
-                    </h3>
-                </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table id="datatable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>name</th>
-                                <th>User name</th>
+                                <th>User</th>
+                                <th>Full link</th>
+                                <th>Short link</th>
+                                <th>views</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($admins as $admin)
+                            @foreach($links as $link)
                             <tr>
-                                <td>{{ $admin->id }}</td>
-                                <td>{{ $admin->name }}</td>
-                                <td>{{ $admin->username }}</td>
+                                <td>{{ $link->id }}</td>
+                                <td><a href="">{{ $link->user_id ? $link->user_id->name : 'Unknown user' }}</a></td>
+                                <td><a href="{{ $link->full_url }}" target="_blank">{{ $link->full_url }}</a></td>
+                                <td><a href="{{ $link->short_url }}" target="_blank">{{ $link->short_url }}</a></td>
+                                <td>{{ $link->views }}</td>
                                 <td>
-                                    <a href="/admin/{{$admin->id}}/edit/" class="btn btn-success">Edit</a>
-                                    <a href="#" data-action="/admin/{{$admin->id}}/delete/"
-                                        class="btn btn-danger delete_confirmation" id="delete_confirmation"
-                                        data-toggle="modal" data-target="#deleteModal">Delete</a>
+                                    <a href="#" data-action="{{"/admin/links/". $link->id ."/delete"}}"
+                                        class="btn btn-danger delete_confirmation" data-toggle="modal"
+                                        data-target="#deleteModal">Delete</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -66,8 +67,9 @@
                         <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>name</th>
-                                <th>User name</th>
+                                <th>User</th>
+                                <th>Full link</th>
+                                <th>Short link</th>
                                 <th>Actions</th>
                             </tr>
                         </tfoot>
@@ -84,6 +86,7 @@
 <!-- /.content -->
 
 @include('admin.dashbord.delete_modal')
+
 @endsection
 @section('js')
 <!-- DataTables -->
@@ -101,10 +104,6 @@
                 'autoWidth'   : true
             })
         })
-        $('body').on('click','#delete_confirmation',function(e){
-            e.preventDefault();
-            $(document).find('#delete_action').attr('action',$(this).attr('data-action'));
-        });
         // Delete action
 </script>
 @endsection

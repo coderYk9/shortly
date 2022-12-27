@@ -6,7 +6,7 @@ use Root\Http\Request;
 use App\model\User;
 
 /** this class impliment user authenticatio */
-class AuthController
+class UserAuthController
 {
 
 
@@ -16,15 +16,14 @@ class AuthController
      */
     public function index()
     {
-        return view('admin.auth.login', ['title' => 'LOGIN']);
-        // return view('auth.login', ['title' => 'LOGIN']);
+        return view('auth.login', ['title' => 'LOGIN']);
     }
     public function login(Request $request)
     {
         $user = User::query()
             ->where('username', '=', $request->getquery('username'))
             ->first();
-
+        // dd($user);
         if (!$user) {
             $_SESSION['message'] = 'the user is not found';
             $_SESSION['old'] = $request->all();
@@ -36,7 +35,7 @@ class AuthController
             return redirect($request->previouds());
         }
         $_SESSION['user_id'] = $user->id;
-        return  redirect('/admin/dashboard');
+        return  redirect('/');
     }
     public function store(Request $request)
     {
@@ -52,18 +51,15 @@ class AuthController
             $_SESSION['error'] = true;
             return redirect($request->previouds());
         }
-        return  redirect('/auth/login');
+        return  redirect('/login');
     }
-    public function register(Request $request)
+    public function register()
     {
         return view('auth.register', ['title' => 'REGISTER']);
     }
+    public function logout()
+    {
+        unset($_SESSION['user_id']);
+        return  redirect('/');
+    }
 }
-/*
-"HTTP_HOST": "localhost:8021",
- "PATH_INFO": "/php8/date_projet/public/",
-"SERVER_NAME": "localhost",
- "REQUEST_URI": "/php8/date_projet/public/",
-
-PATH_INFO=REQUEST_URI
-*/

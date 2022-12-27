@@ -2,48 +2,44 @@
 
 namespace App\controller\admin;
 
+
+use App\model\User;
 use Root\Http\Request;
-use App\model\Admins;
 
-
-class AdminController
+/** this class all opperation admin */
+class OpperationController
 {
 
+
+    /**
+     *  full opperation to user
+     * @return View 
+     */
     public function index()
     {
-
-        try {
-            $user = Admins::all();
-            return view('admin.activite.index', ['title' => 'Membres', 'admins' => $user]);
-        } catch (\Throwable $th) {
-            return  viewError(404);
-        }
-    }
-    public function store()
-    {
-
-        return view('admin.activite.create', ['title' => 'Create']);
+        $users = User::all();
+        return view('admin.users.index', ['title' => 'users', 'users' => $users]);
     }
     public function edite($req, $params)
     {
         try {
-            $link = Admins::query()->find($params['id']);
+            $link = User::query()->find($params['id']);
         } catch (\Throwable $th) {
             $_SESSION['message'] = 'Sorry this is Bad query';
             return redirect($req->previouds());
         }
         if ($link) {
 
-            return view('admin.activite.edit', ['title' => 'EDITE', 'admin' => $link]);
+            return view('admin.users.edit', ['title' => 'EDITE', 'user' => $link]);
         } else {
-            $_SESSION['message'] = 'The Admin Not Found';
+            $_SESSION['message'] = 'The User Not Found';
             return redirect($req->previouds());
         }
     }
     public function update(Request $req, $params)
     {
         try {
-            $link = Admins::query()->find($params['id']);
+            $link = User::query()->find($params['id']);
         } catch (\Throwable $th) {
             $_SESSION['message'] = 'Sorry this is Bad query';
             return redirect($req->previouds());
@@ -60,25 +56,25 @@ class AdminController
                     'name' => $req->getquery('name'), 'username' => $req->getquery('username'),
                 ]);
             }
-            $_SESSION['msg'] = 'The Admin Update successfully';
-            return redirect('/admin/dashboard');
+            $_SESSION['msg'] = 'The User Update successfully';
+            return redirect('/admin/users');
         } else {
-            $_SESSION['message'] = 'The Admin Not Found';
+            $_SESSION['message'] = 'The User Not Found';
             return redirect($req->previouds());
         }
     }
     public function delete($req, $params)
     {
         try {
-            $link = Admins::query()->find($params['id']);
+            $link = User::query()->find($params['id']);
         } catch (\Throwable $th) {
             $_SESSION['message'] = 'Sorry this is Bad query';
             return redirect($req->previouds());
         }
         if ($link) {
             $link->delete();
-            $_SESSION['msg'] = 'The Admin delete successfully';
-            return redirect('/admin/dashboard');
+            $_SESSION['msg'] = 'The User delete successfully';
+            return redirect('/admin/users');
         } else {
             $_SESSION['message'] = 'The User Not Found';
             return redirect($req->previouds());

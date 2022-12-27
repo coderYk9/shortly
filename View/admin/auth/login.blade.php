@@ -1,8 +1,11 @@
 @extends('admin.layout.main')
 
 @section('content')
-@if(isset($_SESSION['msg']))
-<div class="alert alert-danger">{{ "message"}}</div>
+@if(isset($_SESSION['message']))
+<div class="alert alert-danger">{{ $_SESSION['message']  }}</div>
+@php
+unset($_SESSION['message']);
+@endphp
 @endif
 
 

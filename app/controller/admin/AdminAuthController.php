@@ -35,7 +35,7 @@ class AdminAuthController
             $_SESSION['error'] = true;
             return redirect($request->previouds());
         }
-        $_SESSION['user_id'] = $user->id;
+        $_SESSION['admin_id'] = $user->id;
         return  redirect('/admin/dashboard');
     }
     //add new admin 
@@ -57,7 +57,7 @@ class AdminAuthController
     }
     public function logout()
     {
-        unset($_SESSION['user_id']);
+        unset($_SESSION['admin_id']);
         return  redirect('/auth/login');
     }
 }

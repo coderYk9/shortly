@@ -7,6 +7,8 @@
 use App\middleware\FirstMiddleware;
 use App\middleware\SecondMiddleware;
 use App\middleware\authmiddleware;
+use App\middleware\UserAuthmiddleware;
+use App\middleware\GuestUsermiddileware;
 use App\middleware\Gusetmiddileware;
 
 return [
@@ -17,5 +19,7 @@ return [
     'groupe' => [
         'auth' => new authmiddleware,
         'guest' => new Gusetmiddileware,
+        'guestUser' => new GuestUsermiddileware,
+        'userAuth' => new UserAuthmiddleware,
     ],
 ];

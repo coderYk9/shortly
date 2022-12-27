@@ -2,9 +2,6 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 @endsection
-
-
-
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -31,11 +28,10 @@
             unset($_SESSION['message']);
             @endphp
             @endif
+
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">
-                        <a href="/admin/store/" class="btn btn-primary">Add new admin</a>
-                    </h3>
+
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -49,14 +45,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($admins as $admin)
+                            @foreach($users as $user)
                             <tr>
-                                <td>{{ $admin->id }}</td>
-                                <td>{{ $admin->name }}</td>
-                                <td>{{ $admin->username }}</td>
+                                <td>{{ $user->id }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->username }}</td>
                                 <td>
-                                    <a href="/admin/{{$admin->id}}/edit/" class="btn btn-success">Edit</a>
-                                    <a href="#" data-action="/admin/{{$admin->id}}/delete/"
+                                    <a href="/admin/user/{{$user->id}}/edit/" class="btn btn-success">Edit</a>
+                                    <a href="#" data-action="/admin/user/{{$user->id}}/delete/"
                                         class="btn btn-danger delete_confirmation" id="delete_confirmation"
                                         data-toggle="modal" data-target="#deleteModal">Delete</a>
                                 </td>
