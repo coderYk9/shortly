@@ -20,7 +20,7 @@
   - delete your url
 also you can add url per anonymose user 
 
-## thecnologie :
+## technologie :
   - use adminlite3
   - use ajax 
   - use jquery 
